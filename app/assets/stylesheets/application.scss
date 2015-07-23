@@ -17,13 +17,14 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
-body {
+.center {
   text-align: center;
 }
- .user-info {
-   margin-top: 9px;
- }
 
- .nav {
-   margin-top: 5px;
- }
+.user-info {
+ margin-top: 9px;
+}
+
+.nav {
+ margin-top: 5px;
+}
