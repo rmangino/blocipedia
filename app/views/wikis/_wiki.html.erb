@@ -1,0 +1,13 @@
+<%= content_tag :div, class: 'media', id:"wiki-#{wiki.id}" do %>
+  <div class="media-body">
+    <div class="h1">
+      <h1>
+        <%= @wiki.title %> <%= link_to "Edit", edit_wiki_path(@wiki), class: 'btn btn-success' %>
+        <%= link_to "Delete", [@wiki], class: 'btn btn-danger', method: :delete %>
+      </h1>
+      <small><%= @wiki.user.name %></small>
+      <hr />
+      <p><%= @wiki.body %></p>
+    </div>
+  </div>
+<% end %>

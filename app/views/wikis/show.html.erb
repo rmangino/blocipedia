@@ -1,6 +1,6 @@
 <h1>
   <%= @wiki.title %> <%= link_to "Edit", edit_wiki_path(@wiki), class: 'btn btn-success' %>
-  <%= link_to "Delete", [@wiki], class: 'btn btn-danger', method: :delete %>
+  <%= link_to "Delete", [@wiki], class: 'btn btn-danger', method: :delete, data: { confirm: "Are you sure?" } %>
     </h1>
 <small><%= @wiki.user.name %></small>
 <hr />
