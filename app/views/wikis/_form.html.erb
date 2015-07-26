@@ -20,8 +20,8 @@
     <%= f.text_area :body, class: 'form-control', placeholder: "Enter Wiki content" %>
   <% end %>
 
-  <%# Only wiki owners and admins can change a wiki's privacy state %>
-  <% if wiki.user == current_user || current_user.admin? %>
+  <%# Only premium users and admins can change a wiki's privacy state %>
+  <% if (current_user && current_user.can_create_private_wikis?) || current_user.admin? %>
     <%= form_group_tag(wiki.errors[:private]) do %>
       <%= f.check_box :private %> Private
     <% end %>
