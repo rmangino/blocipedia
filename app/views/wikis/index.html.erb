@@ -6,7 +6,8 @@
       <div class="media">
         <div class="media-body">
           <h4 class="media-heading">
-            <%= link_to wiki.title, wiki %>
+            <%= link_to wiki.title, wiki %> <small>(<%= wiki.user.name %>)</small>
+            <small style="color: red"><%= "private" if wiki.private %></small>
           </h4>
         </div>
       </div>

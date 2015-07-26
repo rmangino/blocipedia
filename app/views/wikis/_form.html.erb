@@ -20,6 +20,13 @@
     <%= f.text_area :body, class: 'form-control', placeholder: "Enter Wiki content" %>
   <% end %>
 
+  <%# Only wiki owners and admins can change a wiki's privacy state %>
+  <% if wiki.user == current_user || current_user.admin? %>
+    <%= form_group_tag(wiki.errors[:private]) do %>
+      <%= f.check_box :private %> Private
+    <% end %>
+  <% end %>
+
   <%= f.submit button_title, class: 'btn btn-success' %>
 
 <% end %>
