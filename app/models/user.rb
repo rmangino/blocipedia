@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
   # Delete a user's wikis if they delete their account
   has_many :wikis, dependent: :destroy
 
+  def can_create_private_wikis?
+    admin? || premium?
+  end
+
 private
 
   def set_default_role
