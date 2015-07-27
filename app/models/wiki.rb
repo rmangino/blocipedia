@@ -10,7 +10,9 @@ class Wiki < ActiveRecord::Base
       if user.admin?
         Wiki.all
       else
-        (where(user: user) + publicly_viewable).uniq
+        # Convert the array into an ActiveRecord::Relation
+        wikis_array = (where(user: user) + publicly_viewable).uniq
+        Wiki.where( id: wikis_array.map(&:id) )
       end
     else
       publicly_viewable
