@@ -1,6 +1,5 @@
 class Wiki < ActiveRecord::Base
   belongs_to :user
-  after_initialize :set_default_visibility, :if => :new_record?
 
   # By default order by updated_at
   default_scope { order('updated_at DESC') }
@@ -20,10 +19,4 @@ class Wiki < ActiveRecord::Base
 
   scope :publicly_viewable,  -> { where(private: false) }
   scope :privately_viewable, -> { where(private: true)  }
-
-private
-
-  def set_default_visibility
-    self.private ||= false
-  end
 end
