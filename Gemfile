@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use SCSS for stylesheets
@@ -66,6 +65,8 @@ group :development, :test do
   gem 'awesome_print'
 
   gem 'factory_girl_rails', '~> 4.0'
+
+  gem 'redcarpet'
 
   # Required to use Chrome's RailsPanel extension
   gem 'meta_request'

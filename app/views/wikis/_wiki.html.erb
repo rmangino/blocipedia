@@ -11,6 +11,6 @@
     <small><%= @wiki.user.name %></small>
     <small style="color: red;"><%= "private" if @wiki.private %></small>
     <hr />
-    <p><%= @wiki.body %></p>
+    <p><%= markdown_to_html(@wiki.body) %></p>
   </div>
 <% end %>
