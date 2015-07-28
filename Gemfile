@@ -66,8 +66,6 @@ group :development, :test do
 
   gem 'factory_girl_rails', '~> 4.0'
 
-  gem 'redcarpet'
-
   # Required to use Chrome's RailsPanel extension
   gem 'meta_request'
 end
