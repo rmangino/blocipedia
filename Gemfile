@@ -29,6 +29,8 @@ gem 'figaro'
 # authorization
 gem 'pundit'
 
+gem 'redcarpet'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -65,8 +67,6 @@ group :development, :test do
   gem 'awesome_print'
 
   gem 'factory_girl_rails', '~> 4.0'
-
-  gem 'redcarpet'
 
   # Required to use Chrome's RailsPanel extension
   gem 'meta_request'
