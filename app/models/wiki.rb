@@ -19,6 +19,10 @@ class Wiki < ActiveRecord::Base
     end
   }
 
+  scope :privately_viewable_for_user, -> (user) {
+    where("user = ? AND private = ?", user, true)
+  }
+
   scope :publicly_viewable,  -> { where(private: false) }
   scope :privately_viewable, -> { where(private: true)  }
 end

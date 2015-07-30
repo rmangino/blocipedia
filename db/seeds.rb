@@ -24,8 +24,8 @@ end
 admin        = create_user('Admin User', 'admin@example.com', 'helloworld', :admin)
 user1free    = create_user('User1Free', 'user1free@example.com', 'helloworld', :free)
 user2free    = create_user('User2Free', 'user2free@example.com', 'helloworld', :free)
-user1premium = create_user('User1Premimum', 'user1premium@example.com', 'helloworld', :premium)
-user2premium = create_user('User2Premimum', 'user2premium@example.com', 'helloworld', :premium)
+user1premium = create_user('User1Premium', 'user1premium@example.com', 'helloworld', :premium)
+user2premium = create_user('User2Premium', 'user2premium@example.com', 'helloworld', :premium)
 
 ###############################################################################
 

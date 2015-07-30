@@ -14,6 +14,23 @@ class User < ActiveRecord::Base
     admin? || premium?
   end
 
+  def can_upgrade_to_premium_account?
+    free?
+  end
+
+  def can_downgrade_to_free_account?
+    premium?
+  end
+
+  def upgrade_to_premium!
+    premium!
+  end
+
+  def downgrade_to_free!
+    free!
+  end
+
+
 private
 
   def set_default_role

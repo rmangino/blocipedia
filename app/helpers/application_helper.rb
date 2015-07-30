@@ -1,4 +1,5 @@
 module ApplicationHelper
+  @@redcarpet_renderer_instance = nil
 
   def form_group_tag(errors, &block)
     if errors.any?
@@ -8,10 +9,13 @@ module ApplicationHelper
     end
   end
 
+  def redcarpet_renderer
+    @@redcarpet_renderer_instance ||= Redcarpet::Render::HTML.new
+  end
+
   def markdown_to_html(markdown)
-    renderer = Redcarpet::Render::HTML.new
     extensions = {fenced_code_blocks: true}
-    redcarpet = Redcarpet::Markdown.new(renderer, extensions)
+    redcarpet = Redcarpet::Markdown.new(redcarpet_renderer, extensions)
     (redcarpet.render markdown).html_safe
   end
 

@@ -45,6 +45,20 @@
        </div>
      <% end %>
 
+     <% if current_user && current_user.free? %>
+       <% stripe_btn_data = ChargesHelper.stripe_btn_data %>
+       <%= form_tag charges_path do %>
+       <div class="center nav">
+        <script class='stripe-button' src="https://checkout.stripe.com/checkout.js"
+                data-key="<%= stripe_btn_data[:key] %>"
+                data-amount="<%= stripe_btn_data[:amount] %>"
+                data-description="<%= stripe_btn_data[:description] %>"
+                data-label="<%= stripe_btn_data[:label] %>" >
+        </script>
+        </div>
+       <% end %>
+     <% end %>
+
     <%= yield %>
 
   </div>
