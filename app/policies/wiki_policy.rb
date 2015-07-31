@@ -13,7 +13,7 @@ class WikiPolicy < ApplicationPolicy
 
     if record.private?
       collaborator = record.collaborators.find_by(user.id)
-      return record.user == user || collaborator || user.admin?
+      return record.user == user || nil != collaborator || user.admin?
     end
 
     true
