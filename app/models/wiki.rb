@@ -1,6 +1,9 @@
 class Wiki < ActiveRecord::Base
   belongs_to :user
 
+  has_many :collaborators
+  has_many :users, through: :collaborators
+
   # By default order by updated_at
   default_scope { order('updated_at DESC') }
 
@@ -19,10 +22,23 @@ class Wiki < ActiveRecord::Base
     end
   }
 
-  scope :privately_viewable_for_user, -> (user) {
-    where("user = ? AND private = ?", user, true)
-  }
-
   scope :publicly_viewable,  -> { where(private: false) }
   scope :privately_viewable, -> { where(private: true)  }
+
+  def public?
+    !private
+  end
+
+  def private?
+    !public?
+  end
+
+  def is_collaborator?(user)
+    collaborators.each do |collab|
+      if collab.user_id == user.id
+        return true
+      end
+    end
+    false
+  end
 end

@@ -1,0 +1,18 @@
+<% if wiki.private %>
+  <h2>Collaborators</h2>
+  <% users.each do |user| %>
+      <% if user.can_be_collaborator?(wiki) %>
+        <div class="form-group">
+          <%= user.name %>
+          <br>
+          <% if current_user.admin? || wiki.user == current_user %>
+            <% if wiki.is_collaborator?(user) %>
+                <%= link_to "Delete", collaborator_path(wiki_id: wiki.id, user_id: user.id), method: :delete, class: 'btn btn-danger' %>
+            <% else %>
+                <%= link_to "Add", collaborators_path(wiki_id: wiki.id, user_id: user.id), method: :post, class: 'btn btn-success' %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+  <% end %>
+<% end %>

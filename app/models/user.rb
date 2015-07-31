@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   # Delete a user's wikis if they delete their account
   has_many :wikis, dependent: :destroy
 
+  has_many :collaborators, through: :wikis
+
   def can_create_private_wikis?
     admin? || premium?
   end
@@ -28,6 +30,10 @@ class User < ActiveRecord::Base
 
   def downgrade_to_free!
     free!
+  end
+
+  def can_be_collaborator?(wiki)
+    wiki.user != self
   end
 
 

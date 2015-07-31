@@ -6,12 +6,14 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def update?
-    # A user has to be present. Any user can edit any wiki that
-    # are publicly viewable. Admins can edit *all* wikis
+    # A user has to be present. Any user can edit all public wikis, private
+    # wikis that they own, or private wikis that they are a collaborator.
+    # Admins can edit *all* wikis.
     return false if !user.present?
 
     if record.private?
-      return record.user == user || user.admin?
+      collaborator = @record.collaborators.find_by(user.id)
+      return record.user == user || collaborator || user.admin?
     end
 
     true
@@ -25,5 +27,46 @@ class WikiPolicy < ApplicationPolicy
   def destroy?
     user.present? && (record.user == user || user.admin?)
   end
+
+  #############################################################################
+
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      wikis = []
+
+      if user.admin?
+        # Admins see everything
+        wikis = scope.all
+      elsif user.premium?
+        # Premium users see: public wikis, private wikis they created,
+        # private wikis they are a collaborator on
+        all_wikis = scope.all
+        all_wikis.each do |wiki|
+          if wiki.public? || wiki.user == user || wiki.users.include?(user)
+            wikis << wiki
+          end
+        end
+      else
+        # This is a Free user. They can only see public wikis and private wikis
+        # they are collaborators on.
+        all_wikis = scope.all
+        all_wikis.each do |wiki|
+          if wiki.public? || wiki.users.include?(user)
+            wikis << wiki
+          end
+        end
+      end
+
+      wikis
+    end
+
+  end # class Scope
 
 end
