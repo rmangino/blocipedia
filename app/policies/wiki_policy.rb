@@ -40,6 +40,7 @@ class WikiPolicy < ApplicationPolicy
 
     def resolve
       wikis = []
+      return wikis if !user
 
       if user.admin?
         # Admins see everything
