@@ -33,7 +33,7 @@ class CollaboratorsController < ApplicationController
 private
 
   def find_collaborator
-    @collaborator = @wiki.collaborators.find_by(current_user.id)
+    @collaborator = @wiki.collaborators.find(current_user.id)
   end
 
   def find_wiki
