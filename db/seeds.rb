@@ -7,6 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'faker'
 
+User.destroy_all
+Wiki.destroy_all
+Collaborator.destroy_all
+
 ###############################################################################
 
 # Helpers
