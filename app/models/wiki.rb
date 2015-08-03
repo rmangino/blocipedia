@@ -41,4 +41,8 @@ class Wiki < ActiveRecord::Base
     end
     false
   end
+
+  def has_collaborators?
+    collaborators.count > 0
+  end
 end

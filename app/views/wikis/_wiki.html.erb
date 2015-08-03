@@ -8,8 +8,17 @@
       <% end %>
     </h1>
 
-    <small><%= @wiki.user.name %></small>
+    <small><%= "Author: #{@wiki.user.name}" %></small>
     <small style="color: red;"><%= "private" if @wiki.private %></small>
+    <% if @wiki.has_collaborators? %>
+      <br>
+      <small>
+        <%= "Collaborators: " %>
+        <% @wiki.collaborators.each do |collab| %>
+          <%= "#{collab.user.name} " %>
+        <% end %>
+      </small>
+    <% end %>
     <hr />
     <p><%= markdown_to_html(@wiki.body) %></p>
   </div>
