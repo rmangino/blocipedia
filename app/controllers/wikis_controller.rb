@@ -33,6 +33,8 @@ class WikisController < ApplicationController
   end
 
   def update
+    params[:wiki][:collaborator_ids] ||= []
+
     find_wiki
     authorize @wiki
     if @wiki.update_attributes(wiki_params)
@@ -55,6 +57,26 @@ class WikisController < ApplicationController
       flash[:error] = "There was an error deleting the Wiki."
       render :show
     end
+  end
+
+  def update_collaborators
+    params[:user_ids] ||= []
+    find_wiki
+
+    User.all.each do |user|
+      if user.can_be_collaborator?(@wiki)
+        if params[:user_ids].include?(user.id.to_s)
+          if nil == Collaborator.find_by(user_id: user.id, wiki_id: @wiki.id)
+            Collaborator.create!(user_id: user.id, wiki_id: @wiki.id)
+          end
+        else
+          Collaborator.destroy_all(user_id: user.id, wiki_id: @wiki.id)
+        end
+      end
+    end
+
+    flash[:notice] = "Collaborators updated."
+    redirect_to @wiki
   end
 
 private

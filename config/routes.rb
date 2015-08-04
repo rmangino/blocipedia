@@ -6,7 +6,12 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :wikis
+  resources :wikis do
+    member do
+      put 'update_collaborators'
+    end
+  end
+
   resources :collaborators, except: [:index]
 
   get 'charges/downgrade' => "charges#downgrade"

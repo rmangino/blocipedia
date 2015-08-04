@@ -1,18 +1,16 @@
-<% if wiki.private %>
+<% if wiki.private && wiki.user == current_user %>
   <h2>Collaborators</h2>
-  <% users.each do |user| %>
-      <% if user.can_be_collaborator?(wiki) %>
-        <div class="form-group">
-          <%= user.name %>
-          <br>
-          <% if current_user.admin? || wiki.user == current_user %>
-            <% if wiki.is_collaborator?(user) %>
-                <%= link_to "Delete", collaborator_path(wiki_id: wiki.id, user_id: user.id), method: :delete, class: 'btn btn-danger' %>
-            <% else %>
-                <%= link_to "Add", collaborators_path(wiki_id: wiki.id, user_id: user.id), method: :post, class: 'btn btn-success' %>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
+
+  <%= form_tag update_collaborators_wiki_path, method: :put do %>
+    <% for user in users %>
+        <% if user != wiki.user %>
+          <% is_collab = !!Collaborator.find_by(user_id: user.id, wiki_id: wiki.id) %>
+          <span class='form-control'>
+          <%= check_box_tag "user_ids[]", user.id, checked = is_collab %>
+          <%= user.name %> </span><br />
+        <% end %>
+    <% end %>
+    <%= submit_tag "Update Collaborators", class: 'btn btn-success' %>
   <% end %>
+
 <% end %>
