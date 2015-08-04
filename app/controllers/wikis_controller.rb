@@ -63,15 +63,14 @@ class WikisController < ApplicationController
     params[:user_ids] ||= []
     find_wiki
 
+    # Destroy all collaborators for this wiki
+    Collaborator.destroy_all(wiki_id: @wiki.id)
+
     User.all.each do |user|
       if user.can_be_collaborator?(@wiki)
         if params[:user_ids].include?(user.id.to_s)
-          if nil == Collaborator.find_by(user_id: user.id, wiki_id: @wiki.id)
-            Collaborator.create!(user_id: user.id, wiki_id: @wiki.id)
-          end
-        else
-          Collaborator.destroy_all(user_id: user.id, wiki_id: @wiki.id)
-        end
+          Collaborator.create!(user_id: user.id, wiki_id: @wiki.id)
+         end
       end
     end
 

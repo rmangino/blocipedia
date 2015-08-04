@@ -4,10 +4,11 @@
   <%= form_tag update_collaborators_wiki_path, method: :put do %>
     <% for user in users %>
         <% if user != wiki.user %>
-          <% is_collab = !!Collaborator.find_by(user_id: user.id, wiki_id: wiki.id) %>
+          <% is_collaborator = !!Collaborator.find_by(user_id: user.id, wiki_id: wiki.id) %>
           <span class='form-control'>
-          <%= check_box_tag "user_ids[]", user.id, checked = is_collab %>
-          <%= user.name %> </span><br />
+            <%= check_box_tag "user_ids[]", user.id, checked = is_collaborator %>
+            <%= user.name %>
+          </span><br />
         <% end %>
     <% end %>
     <%= submit_tag "Update Collaborators", class: 'btn btn-success' %>
